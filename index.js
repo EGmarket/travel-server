@@ -19,12 +19,26 @@ async function run() {
       await client.connect();
       const database = client.db("egTravels");
       const offerCollection = database.collection("offers");
+      const honeyCollection = database.collection("honeyTours");
+      const popularCollection = database.collection("popularTours");
       
-      //Get Api
+      //Get Api offer
       app.get('/offers', async(req, res)=>{
           const cursor = offerCollection.find({});
           const offers = await cursor.toArray();
           res.json(offers);
+      })
+      // Get API Honey
+      app.get('/honey', async(req, res)=>{
+          const cursor = honeyCollection.find({});
+          const honey = await cursor.toArray();
+          res.json(honey);
+      })
+      // Get API Popular
+      app.get('/popular', async(req, res)=>{
+          const cursor = popularCollection.find({});
+          const popular = await cursor.toArray();
+          res.json(popular);
       })
 
       // Get Single Service API
