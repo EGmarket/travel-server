@@ -112,7 +112,7 @@ async function run() {
     const query = {_id: ObjectId(id)}
     const result = await ordersCollection.findOne(query);
     console.log(id);
-    res.send(result);
+    res.json(result);
   })
 
 
