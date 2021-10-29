@@ -108,11 +108,11 @@ async function run() {
   /* ------------------UPDATE----------------------------------- */
 
     app.get('/orders/:id', async(req, res) =>{
-    console.log(req.params.id);
-    // const query = {_id: ObjectId(id)}
-    // const result = await ordersCollection.findOne(query);
-    // console.log(id);
-    // res.json(result);
+    const id = req.params.id;
+    const query = {_id: ObjectId(id)}
+    const result = await ordersCollection.findOne(query);
+    console.log(id);
+    res.json(result);
   })
 
 
