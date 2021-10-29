@@ -92,20 +92,7 @@ async function run() {
       res.json(result);
     });
 
-    // Get Single product by using ID
-    app.get("/order", async (req, res) => {
-      const cursor = ordersCollection.find({});
-      const orders = await cursor.toArray();
-      res.send(orders);
-    });
-
-    app.get("/order/:id", async(req, res) => {
-      const id = req.params.id;
-      const query = { _id: ObjectId(id) };
-      const result = await ordersCollection.findOne(query);
-      console.log(id);
-      res.send(result);
-    });
+    
 
     //  Get specific order by using email
     app.get("/orders", async (req, res) => {
@@ -122,10 +109,39 @@ async function run() {
 
     // get all orders
 
-   
+   // Get Single product by using ID
+   app.get("/order", async (req, res) => {
+    const cursor = ordersCollection.find({});
+    const orders = await cursor.toArray();
+    res.send(orders);
+  });
+
+  app.get("/order/:id", async(req, res) => {
+    const id = req.params.id;
+    const query = { _id: ObjectId(id) };
+    const result = await ordersCollection.findOne(query);
+    console.log(id);
+    res.send(result);
+  });
 
     /* ------------------UPDATE----------------------------------- */
-
+    app.put("/update/:id", async (req, res) => {
+      const id = req.params.id;
+      const updated = req.body;
+      const filter = { _id: ObjectId(id) };
+  
+      productsCollection
+        .updateOne(filter, {
+          $set: {
+            name: updated.name,
+            country: updated.country,
+            city: updated.city
+          }, 
+        })
+        .then((result) => {
+          res.send(result);
+        });
+    });
     
   } finally {
     //   await client.close();
