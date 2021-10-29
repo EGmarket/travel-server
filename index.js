@@ -89,7 +89,7 @@ async function run() {
         res.json(result)
       });
 
-      // Order Get 
+      //  Get specific order
 
       app.get('/orders/:email', async(req, res)=>{
         const cursor = ordersCollection.find({email: req.params.email});
@@ -97,6 +97,13 @@ async function run() {
         res.json(order);
     })
 
+    // get all orders
+
+    app.get('/orders', async(req, res)=>{
+      const cursor = ordersCollection.find({});
+      const order = await cursor.toArray();
+      res.json(order);
+  })
 
     } finally {
     //   await client.close();
