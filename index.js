@@ -44,12 +44,13 @@ async function run() {
       // Get Single Service API
 
       //POST API
-     app.post('/services', async(req, res)=>{
-         const service = req.body;
-         console.log("hit the post api" , service);
-         const result = await volentureCollection.insertOne(service); 
-         res.json(result)
-     })
+      app.post('/honey', async(req, res) => {
+        const newUser = req.body;
+        const result = await honeyCollection.insertOne(newUser)
+        console.log("got new user", req.body);
+        console.log('Added user',result);
+        res.json(result)
+      });
     
     //   console.log(`A document was inserted with the _id: ${result.insertedId}`);
     } finally {
