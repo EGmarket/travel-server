@@ -110,7 +110,7 @@ async function run() {
     app.get('/orders/:id', async(req, res) =>{
     const id = req.params.id;
     const query = {_id: ObjectId(id)}
-    const result = await ordersCollection.findOne(query);
+    const result = await ordersCollection.find({});
     console.log(id);
     res.json(result);
   })
