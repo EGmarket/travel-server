@@ -22,6 +22,7 @@ async function run() {
       const honeyCollection = database.collection("honeyTours");
       const popularCollection = database.collection("popularTours");
       const topsCollection = database.collection("topTours");
+      const ordersCollection = database.collection("orders");
       
       //Get Api offer
       app.get('/offers', async(req, res)=>{
@@ -78,7 +79,14 @@ async function run() {
       });
       /* ---------------END-POST-ROUTE----------------------------------------------- */
     
-    //   console.log(`A document was inserted with the _id: ${result.insertedId}`);
+      /* --------------GET-ORDER----------------------------------- */
+      app.post('/orders', async(req, res) => {
+        const newOrder = req.body;
+        const result = await ordersCollection.insertOne(newOrder)
+        console.log("got new user", req.body);
+        console.log('Added user',result);
+        res.json(result)
+      });
     } finally {
     //   await client.close();
     }
