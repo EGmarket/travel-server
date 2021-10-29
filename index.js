@@ -26,6 +26,7 @@ async function run() {
     const popularCollection = database.collection("popularTours");
     const topsCollection = database.collection("topTours");
     const ordersCollection = database.collection("orders");
+    const allOrdersCollection = database.collection("allOrders");
 
     //Get Api offer
     app.get("/offers", async (req, res) => {
@@ -111,7 +112,7 @@ async function run() {
 
    // Get Single product by using ID
    app.get("/order", async (req, res) => {
-    const cursor = ordersCollection.find({});
+    const cursor = allOrdersCollection.find({});
     const orders = await cursor.toArray();
     res.send(orders);
   });
@@ -119,7 +120,7 @@ async function run() {
   app.get("/order/:id", async(req, res) => {
     const id = req.params.id;
     const query = { _id: ObjectId(id) };
-    const result = await ordersCollection.findOne(query);
+    const result = await allOrdersCollection.findOne(query);
     console.log(id);
     res.send(result);
   });
