@@ -21,6 +21,7 @@ async function run() {
       const offerCollection = database.collection("offers");
       const honeyCollection = database.collection("honeyTours");
       const popularCollection = database.collection("popularTours");
+      const topsCollection = database.collection("topTours");
       
       //Get Api offer
       app.get('/offers', async(req, res)=>{
@@ -42,8 +43,8 @@ async function run() {
       })
 
       // Get Single Service API
-
-      //POST API
+      /* ----------------------------POST-route-start-------------------------------------- */
+      //POST Honeymoon API
       app.post('/honey', async(req, res) => {
         const newUser = req.body;
         const result = await honeyCollection.insertOne(newUser)
@@ -51,6 +52,31 @@ async function run() {
         console.log('Added user',result);
         res.json(result)
       });
+      //POST Offer/Service API
+      app.post('/offers', async(req, res) => {
+        const newUser = req.body;
+        const result = await offerCollection.insertOne(newUser)
+        console.log("got new user", req.body);
+        console.log('Added user',result);
+        res.json(result)
+      });
+      //POST Popular API
+      app.post('/populars', async(req, res) => {
+        const newUser = req.body;
+        const result = await popularCollection.insertOne(newUser)
+        console.log("got new user", req.body);
+        console.log('Added user',result);
+        res.json(result)
+      });
+      //POST TOP API
+      app.post('/tops', async(req, res) => {
+        const newUser = req.body;
+        const result = await topsCollection.insertOne(newUser)
+        console.log("got new user", req.body);
+        console.log('Added user',result);
+        res.json(result)
+      });
+      /* ---------------END-POST-ROUTE----------------------------------------------- */
     
     //   console.log(`A document was inserted with the _id: ${result.insertedId}`);
     } finally {
