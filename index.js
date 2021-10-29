@@ -80,6 +80,7 @@ async function run() {
       /* ---------------END-POST-ROUTE----------------------------------------------- */
     
       /* --------------GET-ORDER----------------------------------- */
+      // Order Insert
       app.post('/orders', async(req, res) => {
         const newOrder = req.body;
         const result = await ordersCollection.insertOne(newOrder)
@@ -87,6 +88,16 @@ async function run() {
         console.log('Added user',result);
         res.json(result)
       });
+
+      // Order Get 
+
+      app.get('/orders', async(req, res)=>{
+        const cursor = ordersCollection.find({});
+        const order = await cursor.toArray();
+        res.json(order);
+    })
+
+
     } finally {
     //   await client.close();
     }
