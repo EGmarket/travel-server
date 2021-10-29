@@ -105,6 +105,17 @@ async function run() {
       res.json(order);
   })
 
+  /* ------------------UPDATE----------------------------------- */
+
+    app.get('/orders/:id', async(req, res) =>{
+    const id = req.params.id;
+    const query = {_id: ObjectId(id)}
+    const result = await ordersCollection.findOne(query);
+    console.log(id);
+    res.send(result);
+  })
+
+
     } finally {
     //   await client.close();
     }
