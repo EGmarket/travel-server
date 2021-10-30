@@ -90,10 +90,10 @@ async function run() {
       const result = await ordersCollection.insertOne(newOrder);
       console.log("got new user", req.body);
       console.log("Added user", result);
-      res.json(result);
+      res.send(result);
     });
 
-    app.delete("/deleteProduct/:id", async (req, res) => {
+   /*  app.delete("/deleteProduct/:id", async (req, res) => {
       console.log(req.params.id);
   
       ordersCollection
@@ -101,7 +101,9 @@ async function run() {
         .then((result) => {
           res.send(result);
         });
-    });
+    }); */
+
+    
 
     
 
@@ -111,6 +113,15 @@ async function run() {
       const orders = await cursor.toArray();
       res.send(orders);
     });
+
+    app.delete("/deleteOrder/:id", async(req, res) => {
+      console.log(req.params.id);
+      /* Note: When Inserting Data in my orders collection I can not get ObjectId in DB thats why I Did not use ObjectId, and I don't know what is reason? please give me reason */
+      const result = await ordersCollection.deleteOne({_id:(req.params.id)})
+      console.log(result);
+      res.send(result);
+
+    })
 
     app.get("/orders/:email", async (req, res) => {
       const cursor = ordersCollection.find({ email: req.params.email });
