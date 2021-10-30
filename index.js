@@ -26,7 +26,7 @@ async function run() {
     const popularCollection = database.collection("popularTours");
     const topsCollection = database.collection("topTours");
     const ordersCollection = database.collection("orders");
-    const allOrdersCollection = database.collection("allOrders");
+   
 
     //Get Api offer
     app.get("/offers", async (req, res) => {
@@ -111,19 +111,19 @@ async function run() {
     // get all orders
 
    // Get Single product by using ID
-   app.get("/order", async (req, res) => {
-    const cursor = allOrdersCollection.find({});
-    const orders = await cursor.toArray();
-    res.send(orders);
-  });
+  //  app.get("/order", async (req, res) => {
+  //   const cursor = allOrdersCollection.find({});
+  //   const orders = await cursor.toArray();
+  //   res.send(orders);
+  // });
 
-  app.get("/order/:id", async(req, res) => {
-    const id = req.params.id;
-    const query = { _id: ObjectId(id) };
-    const result = await allOrdersCollection.findOne(query);
-    console.log(id);
-    res.send(result);
-  });
+  // app.get("/order/:id", async(req, res) => {
+  //   const id = req.params.id;
+  //   const query = { _id: ObjectId(id) };
+  //   const result = await allOrdersCollection.findOne(query);
+  //   console.log(id);
+  //   res.send(result);
+  // });
 
     /* ------------------UPDATE----------------------------------- */
     app.put("/update/:id", async (req, res) => {
@@ -143,7 +143,17 @@ async function run() {
           res.send(result);
         });
     });
+
+    /* -------------------- Delete --------------------- */
     
+    app.delete('/orders/:id', async(req, res)=> {
+      const id = req.params.id;
+      const query = {_id: ObjectId(id)}
+      const result = await ordersCollection.deleteOne(query);
+      console.log("delting Orders with id", result);
+      res.json(result)
+    })
+
   } finally {
     //   await client.close();
   }
