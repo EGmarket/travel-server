@@ -26,6 +26,7 @@ async function run() {
     const popularCollection = database.collection("popularTours");
     const topsCollection = database.collection("topTours");
     const ordersCollection = database.collection("orders");
+    const statusCollection = database.collection("status");
    
 
     //Get Api offer
@@ -103,6 +104,15 @@ async function run() {
         });
     }); */
 
+
+    // status 
+
+    app.get("/status", async(req,res) => {
+      const cursor = statusCollection.find({})
+      const status = await cursor.toArray()
+      res.send(status);
+    })
+
     
 
     
@@ -116,7 +126,7 @@ async function run() {
 
     app.delete("/deleteOrder/:id", async(req, res) => {
       console.log(req.params.id);
-      /* Note: When Inserting Data in my orders collection I can not get ObjectId in DB thats why I Did not use ObjectId, and I don't know what is reason? please give me reason */
+      /* Note: When Inserting Data in my orders collection I can not get ObjectId in DB thats why I Did not use ObjectId, and I don't know what is reason. please tell me why this */
       const result = await ordersCollection.deleteOne({_id:(req.params.id)})
       console.log(result);
       res.send(result);
@@ -147,23 +157,55 @@ async function run() {
   // });
 
     /* ------------------UPDATE----------------------------------- */
+    // get single order 
+    app.get("/singleOrder/:id", async(req,res) =>{
+      console.log(req.params);
+      const result = await ordersCollection.findOne({_id:(req.params.id)});
+      res.send(result)
+      console.log(result);
+    })
+
+    // Full Update
     app.put("/update/:id", async (req, res) => {
-      const id = req.params.id;
       const updated = req.body;
-      const filter = { _id: ObjectId(id) };
+      const filter = { _id:(req.params.id) };
   
-      productsCollection
+      ordersCollection
         .updateOne(filter, {
           $set: {
             name: updated.name,
             country: updated.country,
-            city: updated.city
+            city: updated.city,
+            duration: updated.duration,
+            category: updated.category,
+            description: updated.description,
+            price: updated.price,
+            email: updated.email
+
+          }, 
+        })
+        .then((result) => {
+          res.json(result);
+        });
+    });
+
+    // status
+    app.put("/status/:id", async (req, res) => {
+      const id = req.params.id;
+      const updated = req.body;
+      const filter = { _id:(id) };
+  
+      ordersCollection
+        .updateOne(filter, {
+          $set: {
+            status: updated.status
           }, 
         })
         .then((result) => {
           res.send(result);
         });
-    });
+
+    })
 
     /* -------------------- Delete --------------------- */
     
