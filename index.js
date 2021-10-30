@@ -93,6 +93,16 @@ async function run() {
       res.json(result);
     });
 
+    app.delete("/deleteProduct/:id", async (req, res) => {
+      console.log(req.params.id);
+  
+      ordersCollection
+        .deleteOne({ _id: ObjectId(req.params.id) })
+        .then((result) => {
+          res.send(result);
+        });
+    });
+
     
 
     //  Get specific order by using email
@@ -146,13 +156,7 @@ async function run() {
 
     /* -------------------- Delete --------------------- */
     
-    app.delete('/orders/:id', async(req, res)=> {
-      const id = req.params.id;
-      const query = {_id: ObjectId(id)}
-      const result = await ordersCollection.deleteOne(query);
-      console.log("delting Orders with id", result);
-      res.json(result)
-    })
+   
 
   } finally {
     //   await client.close();
