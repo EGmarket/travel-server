@@ -57,7 +57,7 @@ async function run() {
       res.json(banner)
     })
 
-    // Get Single Service API
+    
     /* ----------------------------POST-route-start-------------------------------------- */
     //POST Honeymoon API
     app.post("/honey", async (req, res) => {
@@ -103,16 +103,6 @@ async function run() {
       res.send(result);
     });
 
-   /*  app.delete("/deleteProduct/:id", async (req, res) => {
-      console.log(req.params.id);
-  
-      ordersCollection
-        .deleteOne({ _id: ObjectId(req.params.id) })
-        .then((result) => {
-          res.send(result);
-        });
-    }); */
-
 
     // status 
 
@@ -148,23 +138,7 @@ async function run() {
       res.json(order);
     });
 
-    // get all orders
-
-   // Get Single product by using ID
-  //  app.get("/order", async (req, res) => {
-  //   const cursor = allOrdersCollection.find({});
-  //   const orders = await cursor.toArray();
-  //   res.send(orders);
-  // });
-
-  // app.get("/order/:id", async(req, res) => {
-  //   const id = req.params.id;
-  //   const query = { _id: ObjectId(id) };
-  //   const result = await allOrdersCollection.findOne(query);
-  //   console.log(id);
-  //   res.send(result);
-  // });
-
+   
     /* ------------------UPDATE----------------------------------- */
     // get single order 
     app.get("/singleOrder/:id", async(req,res) =>{
