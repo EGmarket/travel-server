@@ -27,6 +27,7 @@ async function run() {
     const topsCollection = database.collection("topTours");
     const ordersCollection = database.collection("orders");
     const statusCollection = database.collection("status");
+    const bannerCollection = database.collection("banner");
    
 
     //Get Api offer
@@ -48,6 +49,14 @@ async function run() {
       res.json(popular);
     });
 
+    // Getting Banner 
+    app.get("/banner", async(req,res) =>{
+      const cursor = bannerCollection.find({})
+      const banner = await cursor.toArray();
+      console.log(banner);
+      res.json(banner)
+    })
+
     // Get Single Service API
     /* ----------------------------POST-route-start-------------------------------------- */
     //POST Honeymoon API
@@ -62,8 +71,8 @@ async function run() {
     app.post("/offers", async (req, res) => {
       const newUser = req.body;
       const result = await offerCollection.insertOne(newUser);
-      console.log("got new user", req.body);
-      console.log("Added user", result);
+      console.log("got new Offer", req.body);
+      console.log("Added Offer", result);
       res.json(result);
     });
     //POST Popular API
